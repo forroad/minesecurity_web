@@ -20,7 +20,7 @@ public class ErrorsConfig implements ErrorController {
 
     @ExceptionHandler(ExceptionZyc.class)
     public Response onExceptionZyc(ExceptionZyc exceptionZyc){
-        exceptionZyc.printStackTrace();
+        log.error("message = {}",exceptionZyc.getResponse().getMessage());
         return exceptionZyc.getResponse();
     }
 

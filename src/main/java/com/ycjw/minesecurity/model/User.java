@@ -29,12 +29,12 @@ public class User {
     /**
      * 姓名
      */
-    private String userName;
+    private String userName = "未知";
 
     /**
-     * 性别：1-男，0-女
+     * 性别：1-男，0-女，3-未知
      */
-    private int userSex;
+    private int userSex = 3;
 
     /**
      * 用户密码
@@ -51,6 +51,11 @@ public class User {
      * 是否完善资料
      */
     private boolean isComplete = false;
+
+    /**
+     * 用户头像储存路径
+     */
+    private String headImgPath;
 
     public String getUserId() {
         return userId;
@@ -106,5 +111,13 @@ public class User {
 
     public void setComplete(boolean complete) {
         isComplete = complete;
+    }
+
+    public String getHeadImgPath() {
+        return headImgPath;
+    }
+
+    public void setHeadImgPath(String headImgPath) {
+        this.headImgPath = headImgPath;
     }
 }
