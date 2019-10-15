@@ -1,0 +1,35 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.9.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+group = 'com.ycjw'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//导入log4j使用的包
+	compile 'org.springframework.boot:spring-boot-starter-log4j2:1.5.10.RELEASE'
+	//导入swagger相关包
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+	//导入mysql相关包
+	compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
+	//导入lombok
+	compileOnly 'org.projectlombok:lombok:1.18.6'
+	annotationProcessor 'org.projectlombok:lombok:1.18.6'
+}
+
+configurations {
+	//移除starter-loging避免与log4j冲突
+	all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
