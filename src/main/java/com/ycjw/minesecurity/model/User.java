@@ -57,6 +57,13 @@ public class User {
      */
     private String headImgPath;
 
+    public boolean CompleteState(){
+        if(userName.equals("未知") || userSex == 3){
+            return false;
+        }
+        return true;
+    }
+
     public String getUserId() {
         return userId;
     }

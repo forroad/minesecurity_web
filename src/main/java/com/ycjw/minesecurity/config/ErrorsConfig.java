@@ -21,6 +21,7 @@ public class ErrorsConfig implements ErrorController {
     @ExceptionHandler(ExceptionZyc.class)
     public Response onExceptionZyc(ExceptionZyc exceptionZyc){
         log.error("message = {}",exceptionZyc.getResponse().getMessage());
+        exceptionZyc.printStackTrace();
         return exceptionZyc.getResponse();
     }
 
