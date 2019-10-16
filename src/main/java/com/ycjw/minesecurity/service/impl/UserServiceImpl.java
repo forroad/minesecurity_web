@@ -185,8 +185,8 @@ public class UserServiceImpl implements UserService {
         String imgtype = fileAllName.substring(index,fileAllName.length());
         String path = "C:\\minesecurity\\user\\";
         File fileImage = new File(path);
-        if (!fileImage.getParentFile().exists()) {
-            fileImage.getParentFile().mkdirs();
+        if (!fileImage.exists()) {
+            fileImage.mkdirs();
         }
         try {
             uploadFile(headImg.getBytes(), path, user.getUserId() + imgtype);
