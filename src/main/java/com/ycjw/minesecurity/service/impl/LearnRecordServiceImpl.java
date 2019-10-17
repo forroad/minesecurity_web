@@ -7,6 +7,7 @@ import com.ycjw.minesecurity.model.response.Response;
 import com.ycjw.minesecurity.repository.LearnRecordRepository;
 import com.ycjw.minesecurity.service.LearnRecordService;
 import com.ycjw.minesecurity.service.LearnResourceService;
+import com.ycjw.minesecurity.utils.DateUtil;
 import com.ycjw.minesecurity.utils.KeyUtil;
 import com.ycjw.minesecurity.utils.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -30,7 +33,7 @@ public class LearnRecordServiceImpl implements LearnRecordService {
             return new Response("失败",null);
         }
         LearnRecord learnRecord=new LearnRecord();
-        learnRecord.setLearnDate(new Date());
+        learnRecord.setLearnDate(DateUtil.convert2Day());
         learnRecord.setTimeLong(timeLong);
         learnRecord.setLearnRecordId(KeyUtil.getUniqueKey_15());
         learnRecord.setPhoneNum(phoneNum);
@@ -48,5 +51,32 @@ public class LearnRecordServiceImpl implements LearnRecordService {
     public Response findAllByUserPhone(String phone) {
 
         return null;
+    }
+
+    /**
+     * 统计用户每天的学习时间
+     * @param phoneNum
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Response countLearnRecord(String phoneNum) throws Exception {
+        List<LearnRecord> recordList=learnRecordRepository.findAll();
+        if (recordList==null){
+            return new Response("暂时没有学习记录",null);
+        }
+        Iterator<LearnRecord> iterator=recordList.iterator();
+        HashMap<Long,Long> result=new HashMap<Long,Long>();
+        while (iterator.hasNext()) {
+            LearnRecord learnRecord=iterator.next();
+            Long key=learnRecord.getLearnDate().getTime();
+            if (result.containsKey(key)){
+                result.put(key,result.get(key)+learnRecord.getTimeLong());
+            }
+            else {
+                result.put(key,Long.valueOf(learnRecord.getTimeLong()));
+            }
+        }
+        return new Response("成功",result);
     }
 }

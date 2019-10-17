@@ -8,4 +8,6 @@ public interface LearnRecordService {
 
      Response  findAllByUserPhone(String phone) throws Exception;
 
+     Response countLearnRecord(String phoneNum)throws Exception;
+
 }
