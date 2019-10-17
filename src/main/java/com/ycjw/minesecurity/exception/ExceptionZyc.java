@@ -13,6 +13,9 @@ public class ExceptionZyc extends Exception {
     public static final ExceptionZyc PARAM_IS_NULL = new ExceptionZyc(new Response("参数不能为空", null));
     public static final ExceptionZyc IMAGE_IS_NULL = new ExceptionZyc(new Response("上传图片失败，换张图片再试", null));
     public static final ExceptionZyc IMAGE_URL_IS_NULL = new ExceptionZyc(new Response("获取头像失败", null));
+    public static final ExceptionZyc FILE_IS_NULL = new ExceptionZyc(new Response("上传文件失败", null));
+    public static final ExceptionZyc DOWNLOAD_FAILURE = new ExceptionZyc(new Response("下载文件失败", null));
+    public static final ExceptionZyc RESOURCE_IS_NOT_EXIST = new ExceptionZyc(new Response("资源不存在", null));
 
     private Response response;
 
