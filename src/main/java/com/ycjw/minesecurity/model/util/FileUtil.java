@@ -73,6 +73,35 @@ public class FileUtil {
         }
     }
 
+    public static void loadImg(String filepath,HttpServletResponse response) throws ExceptionZyc{
+        if(filepath == null || filepath.equals("") || filepath.length() <= 0){
+            //文件不存在，抛出错误
+            throw ExceptionZyc.PARAM_IS_NULL;
+        }
+        try {
+            File file = new File(filepath);
+            //判断文件是否存在如果不存在就返回默认图标
+            if(!(file.exists() && file.canRead())) {
+                //用户不存在，抛出错误
+                response.setStatus(404);
+                throw ExceptionZyc.DOWNLOAD_FAILURE;
+            }
+            FileInputStream inputStream = new FileInputStream(file);
+            byte[] data = new byte[(int)file.length()];
+            int length = inputStream.read(data);
+            inputStream.close();
+            response.setContentType("image/png");
+            OutputStream stream = response.getOutputStream();
+            stream.write(data);
+            stream.flush();
+            stream.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setStatus(500);
+            throw ExceptionZyc.DOWNLOAD_FAILURE;
+        }
+    }
+
     private static void uploadFile(byte[] file, String filePath, String fileName)throws Exception{
         File targetFile=new File(filePath);
         if(targetFile.exists()){

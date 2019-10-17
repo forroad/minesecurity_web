@@ -62,4 +62,20 @@ public class ResourceServiceImpl implements ResourceService {
         }
         return new Response("成功",resourceList);
     }
+
+    @Override
+    public Response findCover(String resourceId, HttpServletResponse response) throws Exception {
+        //参数不能为空
+        if(StringUtils.isEmpty(resourceId)){
+            throw ExceptionZyc.PARAM_IS_NULL;
+        }
+        //判断资源是否存在
+        Resource resource = resourceDao.findByResourceId(resourceId);
+        if(resource == null){
+            //资源不存在
+            throw ExceptionZyc.RESOURCE_IS_NOT_EXIST;
+        }
+        FileUtil.loadImg(resource.getCoverPath(),response);
+        return null;
+    }
 }

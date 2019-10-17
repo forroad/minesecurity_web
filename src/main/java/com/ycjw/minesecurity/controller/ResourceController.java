@@ -39,4 +39,10 @@ public class ResourceController {
     public Response findAllResource() throws Exception{
         return resourceService.findAllResource();
     }
+
+    @ApiOperation("下载资源")
+    @GetMapping("downloadcover")
+    public void downloadCover(@RequestParam("resourceId") String resourceId, HttpServletResponse response) throws Exception {
+        resourceService.findCover(resourceId,response);
+    }
 }

@@ -31,4 +31,9 @@ public interface ResourceService {
      * @throws Exception
      */
      Response findAllResource() throws Exception;
+
+     Response findCover(String id,HttpServletResponse response) throws Exception;
+
+
+
 }
