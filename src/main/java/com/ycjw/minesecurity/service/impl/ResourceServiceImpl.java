@@ -2,6 +2,7 @@ package com.ycjw.minesecurity.service.impl;
 
 import com.ycjw.minesecurity.exception.ExceptionZyc;
 import com.ycjw.minesecurity.model.Resource;
+import com.ycjw.minesecurity.model.response.Response;
 import com.ycjw.minesecurity.model.util.FileUtil;
 import com.ycjw.minesecurity.repository.ResourceDao;
 import com.ycjw.minesecurity.service.ResourceService;
@@ -11,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Service
 public class ResourceServiceImpl implements ResourceService {
@@ -28,7 +30,7 @@ public class ResourceServiceImpl implements ResourceService {
         //判断文件是否为空
         if (resourceCover == null||resourceCover.isEmpty()) {
             //文件封面为空
-            resource.setCoverPath("C:\\minesecurity\\resource\\img\\default_cover.png");
+            resource.setCoverPath("C:\\minesecurity\\resource\\img\\default_cover.jpg");
         }else {
             resource.setCoverPath(FileUtil.uploadFile(resourceCover,"C:\\minesecurity\\resource\\img\\",resource.getResourceId()));
         }
@@ -50,5 +52,14 @@ public class ResourceServiceImpl implements ResourceService {
             throw ExceptionZyc.RESOURCE_IS_NOT_EXIST;
         }
         FileUtil.downloadFile(resource.getResourcePath(),response);
+    }
+
+    @Override
+    public Response findAllResource() throws Exception {
+        List<Resource> resourceList=resourceDao.findAll();
+        if (resourceList==null){
+            return new Response("失败",resourceList);
+        }
+        return new Response("成功",resourceList);
     }
 }

@@ -2,6 +2,7 @@ package com.ycjw.minesecurity.service;
 
 import com.ycjw.minesecurity.exception.ExceptionZyc;
 import com.ycjw.minesecurity.model.Resource;
+import com.ycjw.minesecurity.model.response.Response;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,4 +24,11 @@ public interface ResourceService {
      * @throws ExceptionZyc
      */
      void downloadResource(String resourceId, HttpServletResponse response) throws ExceptionZyc;
+
+    /**
+     * 查询所有资源
+     * @return
+     * @throws Exception
+     */
+     Response findAllResource() throws Exception;
 }

@@ -33,4 +33,10 @@ public class ResourceController {
     public void downloadResource(@RequestParam("resourceId") String resourceId, HttpServletResponse response) throws ExceptionZyc {
         resourceService.downloadResource(resourceId,response);
     }
+
+    @ApiOperation("查询所有资源")
+    @GetMapping("/find_all_resource")
+    public Response findAllResource() throws Exception{
+        return resourceService.findAllResource();
+    }
 }
