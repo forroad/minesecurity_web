@@ -21,12 +21,12 @@ public class Exam {
     private String examTitle;
 
     /**
-     * 报名开始截至时间
+     * 报名截至时间
      */
     private Date examDeadline;
 
     /**
-     * 报考试开始时间
+     * 考试开始时间
      */
     private Date examStartTime;
 
@@ -34,5 +34,10 @@ public class Exam {
      * 考试截至时间
      */
     private Date examEndTime;
+
+    /**
+     * 试卷id
+     */
+    private String paperId;
 
 }

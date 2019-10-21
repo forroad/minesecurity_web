@@ -11,7 +11,11 @@ import com.ycjw.minesecurity.utils.KeyUtil;
 import com.ycjw.minesecurity.utils.LogUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -80,6 +84,18 @@ public class SelectionQuestionServiceImpl implements SelectionQuestionService {
     }
 
 
-
+    /**
+     * 查询某页还未出现在过试题中的数个题目
+     * @param questionIdList  已经使用过的题目
+     * @param size
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<SelectionQuestion> findSomeQuestionsNotUsedInPaper(List<String > questionIdList,int size,int page) throws Exception {
+        Pageable pageable= PageRequest.of(page,size);
+        Page<SelectionQuestion> questionPage=questionRepository.findByQuestionIdNotIn(questionIdList,pageable);
+        return questionPage.getContent();
+    }
 
 }

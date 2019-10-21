@@ -11,6 +11,10 @@ import com.ycjw.minesecurity.utils.DateUtil;
 import com.ycjw.minesecurity.utils.KeyUtil;
 import com.ycjw.minesecurity.utils.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +30,14 @@ public class LearnRecordServiceImpl implements LearnRecordService {
     @Autowired
     private LearnRecordRepository learnRecordRepository;
 
+    /**
+     * 创建一个学习记录
+     * @param phoneNum
+     * @param timeLong
+     * @param resourceId
+     * @return
+     * @throws Exception
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Response createLearnRecord(String phoneNum,int timeLong,String resourceId) throws Exception {
@@ -33,7 +45,7 @@ public class LearnRecordServiceImpl implements LearnRecordService {
             return new Response("失败",null);
         }
         LearnRecord learnRecord=new LearnRecord();
-        learnRecord.setLearnDate(DateUtil.convert2Day());
+        learnRecord.setLearnDate(new Date());
         learnRecord.setTimeLong(timeLong);
         learnRecord.setLearnRecordId(KeyUtil.getUniqueKey_15());
         learnRecord.setPhoneNum(phoneNum);
@@ -47,10 +59,38 @@ public class LearnRecordServiceImpl implements LearnRecordService {
         return new Response("成功",null);
     }
 
+    /**\
+     *查询用户全部学习记录
+     * @param phone
+     * @return
+     * @throws Exception
+     */
     @Override
-    public Response findAllByUserPhone(String phone) {
+    public Response findAllByUserPhone(String phone) throws Exception{
+        List<LearnRecord> result=findSomeResourceIdByPhone(phone,100,0);
+        List<LearnRecord> ans=result;
+        int i=1;
+        while (result.size()>=100){
+            result=findSomeResourceIdByPhone(phone,100,i);
+            ans.addAll(result);
+            i++;
+        }
+        return new Response("成功",ans);
+    }
 
-        return null;
+    /**
+     * 查询用户最近的两条学习记录
+     * @param phone
+     * @param size
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<LearnRecord>  findSomeResourceIdByPhone(String phone,int size,int pageNum) throws Exception{
+        Sort sort=new Sort(Sort.Direction.DESC,"learnDate");
+        Pageable pageable=PageRequest.of(pageNum,size,sort);
+        Page<LearnRecord> page=learnRecordRepository.findByPhoneNum(phone,pageable);
+        return page.getContent();
     }
 
     /**
@@ -61,7 +101,7 @@ public class LearnRecordServiceImpl implements LearnRecordService {
      */
     @Override
     public Response countLearnRecord(String phoneNum) throws Exception {
-        List<LearnRecord> recordList=learnRecordRepository.findAll();
+        List<LearnRecord> recordList=learnRecordRepository.findAllByPhoneNum(phoneNum);
         if (recordList==null){
             return new Response("暂时没有学习记录",null);
         }
@@ -69,7 +109,7 @@ public class LearnRecordServiceImpl implements LearnRecordService {
         HashMap<Long,Long> result=new HashMap<Long,Long>();
         while (iterator.hasNext()) {
             LearnRecord learnRecord=iterator.next();
-            Long key=learnRecord.getLearnDate().getTime();
+            Long key=DateUtil.convert2Day(learnRecord.getLearnDate()).getTime();
             if (result.containsKey(key)){
                 result.put(key,result.get(key)+learnRecord.getTimeLong());
             }
@@ -79,4 +119,16 @@ public class LearnRecordServiceImpl implements LearnRecordService {
         }
         return new Response("成功",result);
     }
+
+    /**
+     * 查询某个用户的学习时间之和
+     * @param phone
+     * @return
+     */
+     @Override
+     public long  getTimeSum(String phone) throws Exception{
+        return (learnRecordRepository.getLearnTimeSum(phone)).stream()
+                                                                   .reduce(0L,(a,b)->a+b);
+     }
+
 }
