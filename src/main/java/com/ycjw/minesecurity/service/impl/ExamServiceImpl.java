@@ -62,4 +62,9 @@ public class ExamServiceImpl implements ExamService {
     public List<Exam> findAll() throws Exception {
         return examRepository.findAll();
     }
+
+    @Override
+    public Exam findOneById(String id) throws Exception {
+        return examRepository.findById(id).orElse(null);
+    }
 }//calss

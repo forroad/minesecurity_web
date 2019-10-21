@@ -15,4 +15,6 @@ public interface ExamService {
 
     List<Exam>  findAll() throws Exception;
 
+    Exam findOneById(String id) throws Exception;
+
 }

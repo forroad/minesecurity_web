@@ -96,6 +96,9 @@ public class PaperServiceImpl implements PaperService {
         return paperView;
     }
 
+    @Override
+    public Paper findOneById(String id) throws Exception {
+        return paperRepository.findById(id).orElse(null);
+    }
 
-
-}
+}//class

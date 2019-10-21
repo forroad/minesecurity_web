@@ -16,4 +16,6 @@ public interface PaperService {
 
     PaperView createOnePaper(List<SelectionQuestion> questionList) throws Exception;
 
+    Paper findOneById(String id) throws Exception;
+
 }

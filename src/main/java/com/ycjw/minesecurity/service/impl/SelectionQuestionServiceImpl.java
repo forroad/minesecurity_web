@@ -93,9 +93,18 @@ public class SelectionQuestionServiceImpl implements SelectionQuestionService {
      */
     @Override
     public List<SelectionQuestion> findSomeQuestionsNotUsedInPaper(List<String > questionIdList,int size,int page) throws Exception {
+        if (questionIdList==null || questionIdList.isEmpty()){
+            return questionRepository.findAll();
+        }
         Pageable pageable= PageRequest.of(page,size);
+        //当questionIdList为空时，下面也会查出空
         Page<SelectionQuestion> questionPage=questionRepository.findByQuestionIdNotIn(questionIdList,pageable);
         return questionPage.getContent();
+    }
+
+    @Override
+    public List<SelectionQuestion> findListByIdIn(List<String> questionIdList) throws Exception {
+        return questionRepository.findAllByQuestionIdIn(questionIdList);
     }
 
 }

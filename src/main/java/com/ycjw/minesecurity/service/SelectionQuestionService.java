@@ -18,4 +18,6 @@ public interface SelectionQuestionService {
 
     List<SelectionQuestion> findSomeQuestionsNotUsedInPaper(List<String > questionIdList,int size,int page) throws Exception;
 
+    List<SelectionQuestion> findListByIdIn(List<String> questionIdList)throws Exception;
+
 }

@@ -25,4 +25,11 @@ public interface SelectionQuestionRepository extends JpaRepository<SelectionQues
      */
   Page<SelectionQuestion> findByQuestionIdNotIn(List<String> list,Pageable pageable);
 
+    /**
+     * 查询列表中所有id对应的题目
+     * @param questionIdList
+     * @return
+     */
+  List<SelectionQuestion> findAllByQuestionIdIn(List<String> questionIdList);
+
 }
