@@ -23,7 +23,7 @@ public class SelectionQuestion {
     /**
      *是否为多选，0-否，1-是
      */
-    private int isMultiAnswer;
+    private int isMultiAnswer = 0;
 
     /**
      * 选项 A

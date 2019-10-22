@@ -21,12 +21,12 @@ public class Exam {
     private String examTitle;
 
     /**
-     * 报名开始截至时间
+     * 报名截至时间
      */
     private Date examDeadline;
 
     /**
-     * 报考试开始时间
+     * 考试开始时间
      */
     private Date examStartTime;
 
@@ -35,15 +35,21 @@ public class Exam {
      */
     private Date examEndTime;
 
+    /**
+     * 试卷id
+     */
+    private String paperId;
+
     public Exam() {
     }
 
-    public Exam(String examId, String examTitle, Date examDeadline, Date examStartTime, Date examEndTime) {
+    public Exam(String examId, String examTitle, Date examDeadline, Date examStartTime, Date examEndTime, String paperId) {
         this.examId = examId;
         this.examTitle = examTitle;
         this.examDeadline = examDeadline;
         this.examStartTime = examStartTime;
         this.examEndTime = examEndTime;
+        this.paperId = paperId;
     }
 
     public String getExamId() {
@@ -86,6 +92,14 @@ public class Exam {
         this.examEndTime = examEndTime;
     }
 
+    public String getPaperId() {
+        return paperId;
+    }
+
+    public void setPaperId(String paperId) {
+        this.paperId = paperId;
+    }
+
     @Override
     public String toString() {
         return "Exam{" +
@@ -94,6 +108,7 @@ public class Exam {
                 ", examDeadline=" + examDeadline +
                 ", examStartTime=" + examStartTime +
                 ", examEndTime=" + examEndTime +
+                ", paperId='" + paperId + '\'' +
                 '}';
     }
 }

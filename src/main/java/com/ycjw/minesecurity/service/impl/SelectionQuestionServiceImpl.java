@@ -11,11 +11,13 @@ import com.ycjw.minesecurity.utils.KeyUtil;
 import com.ycjw.minesecurity.utils.LogUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+
+import java.util.*;
 
 @Service
 public class SelectionQuestionServiceImpl implements SelectionQuestionService {
@@ -80,6 +82,39 @@ public class SelectionQuestionServiceImpl implements SelectionQuestionService {
     }
 
 
+    /**
+     * 查询某页还未出现在过试题中的数个题目
+     * @param questionIdList  已经使用过的题目
+     * @param size
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<SelectionQuestion> findSomeQuestionsNotUsedInPaper(List<String > questionIdList,int size,int page) throws Exception {
+        if (questionIdList==null || questionIdList.isEmpty()){
+            return questionRepository.findAll();
+        }
+        Pageable pageable= PageRequest.of(page,size);
+        //当questionIdList为空时，下面也会查出空
+        Page<SelectionQuestion> questionPage=questionRepository.findByQuestionIdNotIn(questionIdList,pageable);
+        return questionPage.getContent();
+    }
 
+    @Override
+    public List<SelectionQuestion> findListByIdIn(List<String> questionIdList) throws Exception {
+        return questionRepository.findAllByQuestionIdIn(questionIdList);
+    }
 
+    @Override
+    public List<SelectionQuestion> findVirtualExamQuestion() {
+        List<SelectionQuestion> questions = questionRepository.findAll();
+        List<SelectionQuestion> return_questions = new ArrayList<>();
+        Random random = new Random();
+        int maxSum = questions.size() > 10?10:questions.size();
+        for(int i = 0;i < maxSum;i++){
+            int index = random.nextInt(questions.size());
+            return_questions.add(questions.remove(index));
+        }
+        return return_questions;
+    }
 }
