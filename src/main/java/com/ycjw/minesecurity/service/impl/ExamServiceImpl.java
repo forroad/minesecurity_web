@@ -50,6 +50,7 @@ public class ExamServiceImpl implements ExamService {
             throw new ExceptionZyc(new Response("日期格式转换错误",examFrom));
         }
 
+        System.out.println("E:"+newExam.toString());
         return saveOne(newExam);
     }
 

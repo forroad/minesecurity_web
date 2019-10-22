@@ -54,17 +54,16 @@ public class ExamController {
         try {
             //查询所有出现过的题目id
             idList= paperService.findAllQuestionIdsUsedInPaper();
-            System.out.println("id"+idList.toString());
+            //System.out.println("id"+idList.toString());
             //查询题目列表
             selectionQuestions=questionService.findSomeQuestionsNotUsedInPaper(idList,10,0);
             //创建保存
-            System.out.println("q:"+selectionQuestions.toString());
+            //System.out.println("q:"+selectionQuestions.toString());
             paperView= paperService.createOnePaper(selectionQuestions);
             paperId=paperView.getPaperId();
         }
         catch (Exception e){
-            LogUtil.logger.error("【创建考试对象】---失败---生成卷子失败  paperNiew="
-                    +paperView.toString());
+            LogUtil.logger.error("【创建考试对象】---失败---生成卷子失败  paperNiew=");
         }
         Exam result=examService.createOneExam(examFrom,paperId);
         if (result==null){

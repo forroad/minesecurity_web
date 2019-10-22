@@ -58,6 +58,7 @@ public class TrainPlanServiceImpl implements TrainPlanService {
     public TrainPlan createOnePlan(TrainPlanFrom planFrom) throws Exception {
         TrainPlan trainPlan=new TrainPlan();
         BeanUtils.copyProperties(planFrom,trainPlan);
+        trainPlan.setTrainTime(DateUtil.strToDate_day(planFrom.getTrainTime()));
         trainPlan.setTrainId(KeyUtil.getUniqueKey_15());
         trainPlan.setCreateTime(new Date());
         return saveOne(trainPlan);

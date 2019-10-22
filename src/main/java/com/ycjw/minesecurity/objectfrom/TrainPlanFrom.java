@@ -2,7 +2,7 @@ package com.ycjw.minesecurity.objectfrom;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+
 
 public class TrainPlanFrom {
 
@@ -19,12 +19,12 @@ public class TrainPlanFrom {
      * 培训日期
      */
     @NotNull
-    private Date trainTime;
+    private String trainTime;
 
     public TrainPlanFrom() {
     }
 
-    public TrainPlanFrom(String trainContent, Date trainTime) {
+    public TrainPlanFrom(String trainContent, String trainTime) {
         this.trainContent = trainContent;
         this.trainTime = trainTime;
     }
@@ -38,11 +38,11 @@ public class TrainPlanFrom {
     }
 
 
-    public Date getTrainTime() {
+    public String getTrainTime() {
         return trainTime;
     }
 
-    public void setTrainTime(Date trainTime) {
+    public void setTrainTime(String trainTime) {
         this.trainTime = trainTime;
     }
 
@@ -50,7 +50,9 @@ public class TrainPlanFrom {
     public String toString() {
         return "TrainPlanFrom{" +
                 "trainContent='" + trainContent + '\'' +
-                ", trainTime=" + trainTime +
+                ", trainTime='" + trainTime + '\'' +
                 '}';
     }
+
+
 }
