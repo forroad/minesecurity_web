@@ -15,7 +15,7 @@ public class SelectionQuestionFrom {
     /**
      *是否为多选，0-否，1-是
      */
-    private int isMutiAnswer;
+    private int isMultiAnswer;
 
     /**
      * 选项 A
@@ -36,9 +36,9 @@ public class SelectionQuestionFrom {
     public SelectionQuestionFrom() {
     }
 
-    public SelectionQuestionFrom(String questionDescribe, int isMutiAnswer, String optionA, String optionB, String optionC, String optionD, String rightOptions) {
+    public SelectionQuestionFrom(String questionDescribe, int isMultiAnswer, String optionA, String optionB, String optionC, String optionD, String rightOptions) {
         this.questionDescribe = questionDescribe;
-        this.isMutiAnswer = isMutiAnswer;
+        this.isMultiAnswer = isMultiAnswer;
         this.optionA = optionA;
         this.optionB = optionB;
         this.optionC = optionC;
@@ -54,12 +54,12 @@ public class SelectionQuestionFrom {
         this.questionDescribe = questionDescribe;
     }
 
-    public int getIsMutiAnswer() {
-        return isMutiAnswer;
+    public int getIsMultiAnswer() {
+        return isMultiAnswer;
     }
 
-    public void setIsMutiAnswer(int isMutiAnswer) {
-        this.isMutiAnswer = isMutiAnswer;
+    public void setIsMultiAnswer(int isMultiAnswer) {
+        this.isMultiAnswer = isMultiAnswer;
     }
 
     public String getOptionA() {
@@ -106,7 +106,7 @@ public class SelectionQuestionFrom {
     public String toString() {
         return "SelectionQuestionFrom{" +
                 "questionDescribe='" + questionDescribe + '\'' +
-                ", isMutiAnswer=" + isMutiAnswer +
+                ", isMultiAnswer=" + isMultiAnswer +
                 ", optionA='" + optionA + '\'' +
                 ", optionB='" + optionB + '\'' +
                 ", optionC='" + optionC + '\'' +

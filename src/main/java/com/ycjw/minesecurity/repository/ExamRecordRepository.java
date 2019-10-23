@@ -36,7 +36,7 @@ public interface ExamRecordRepository extends JpaRepository<ExamRecord,String> {
      * @param pageable
      * @return
      */
-    Page<ExamRecord> findAllByPhoneNum(String phoneNum, Pageable pageable) throws Exception;
+    Page<ExamRecord> findAllByPhoneNumAndEndTimeNotNull(String phoneNum, Pageable pageable) throws Exception;
 
     List<ExamRecord> findAllByEndTimeBefore(Date now, Sort sort);
 }

@@ -117,4 +117,13 @@ public class SelectionQuestionServiceImpl implements SelectionQuestionService {
         }
         return return_questions;
     }
+
+    @Override
+    public List<SelectionQuestion> findTenQuestion() {
+        List<SelectionQuestion> questions = questionRepository.finTenQuestion();
+        if(questions == null){
+            questions = new ArrayList<>();
+        }
+        return questions;
+    }
 }

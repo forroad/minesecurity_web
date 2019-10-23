@@ -63,7 +63,7 @@ public class ExamRecordServiceImpl implements ExamRecordService {
     public List<ExamRecord> findSomeExamRecordByPhone(String phone, int size, int page) throws Exception {
         Sort sort=new Sort(Sort.Direction.DESC,"endTime");
         Pageable pageable= PageRequest.of(page,size,sort);
-        Page<ExamRecord> recordPage=examRecordRepository.findAllByPhoneNum(phone,pageable);
+        Page<ExamRecord> recordPage=examRecordRepository.findAllByPhoneNumAndEndTimeNotNull(phone,pageable);
         List<ExamRecord> recordList=recordPage.getContent();
         return recordList;
     }

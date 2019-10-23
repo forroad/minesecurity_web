@@ -21,4 +21,10 @@ public interface SelectionQuestionService {
     List<SelectionQuestion> findListByIdIn(List<String> questionIdList)throws Exception;
 
     List<SelectionQuestion> findVirtualExamQuestion();
+
+    /**
+     * 查询出十个不重复的题目
+     * @return
+     */
+    List<SelectionQuestion> findTenQuestion();
 }

@@ -30,15 +30,16 @@ public class PaperController {
         List<SelectionQuestion> selectionQuestions=null;
         PaperView paperView=null;
         try {
-            //查询所有出现过的题目id
-           idList= paperService.findAllQuestionIdsUsedInPaper();
-            //查询题目列表
-            if (idList.isEmpty()){
-                selectionQuestions=questionService.findAll();
-            }
-            else {
-                selectionQuestions=questionService.findSomeQuestionsNotUsedInPaper(idList,size,0);
-            }
+//            //查询所有出现过的题目id
+//           idList= paperService.findAllQuestionIdsUsedInPaper();
+//            //查询题目列表
+//            if (idList.isEmpty()){
+//                selectionQuestions=questionService.findAll();
+//            }
+//            else {
+//                selectionQuestions=questionService.findSomeQuestionsNotUsedInPaper(idList,size,0);
+//            }
+            selectionQuestions = questionService.findTenQuestion();
             //创建保存
            paperView= paperService.createOnePaper(selectionQuestions);
         }

@@ -53,13 +53,14 @@ public class ExamController {
         PaperView paperView=null;
         String paperId=null;
         try {
-            //查询所有出现过的题目id
-            idList= paperService.findAllQuestionIdsUsedInPaper();
-            //System.out.println("id"+idList.toString());
-            //查询题目列表
-            selectionQuestions=questionService.findSomeQuestionsNotUsedInPaper(idList,10,0);
+//            //查询所有出现过的题目id
+//            idList= paperService.findAllQuestionIdsUsedInPaper();
+//            //System.out.println("id"+idList.toString());
+//            //查询题目列表
+//            selectionQuestions=questionService.findSomeQuestionsNotUsedInPaper(idList,10,0);
             //创建保存
             //System.out.println("q:"+selectionQuestions.toString());
+            selectionQuestions = questionService.findTenQuestion();
             paperView= paperService.createOnePaper(selectionQuestions);
             paperId=paperView.getPaperId();
         }
@@ -113,13 +114,15 @@ public class ExamController {
             LogUtil.logger.info("【开始考试】--系统错误--用户已经完成考试 phone="+ phone+",examId="+examId);
             return new Response("失败",null);
         }
-        //创建考试记录
-        try {
-            examRecord=examRecordService.createOneExamRecord(phone,examId);
-        }
-        catch (Exception e){
-            LogUtil.logger.error("【开始考试】--系统错误--创建考试记录失败 examRecord="+examRecord.toString());
-            return new Response("失败",null);
+        if(examRecord == null){
+            //创建考试记录
+            try {
+                examRecord=examRecordService.createOneExamRecord(phone,examId);
+            }
+            catch (Exception e){
+                LogUtil.logger.error("【开始考试】--系统错误--创建考试记录失败 examRecord="+examRecord.toString());
+                return new Response("失败",null);
+            }
         }
         //分发试卷
         Exam exam=examService.findOneById(examId);

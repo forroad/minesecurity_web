@@ -4,6 +4,7 @@ import com.ycjw.minesecurity.model.SelectionQuestion;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,5 +32,8 @@ public interface SelectionQuestionRepository extends JpaRepository<SelectionQues
      * @return
      */
   List<SelectionQuestion> findAllByQuestionIdIn(List<String> questionIdList);
+
+  @Query(nativeQuery = true,value = "SELECT * FROM (SELECT*FROM selection_question ORDER BY RAND() LIMIT 10) AS a ORDER BY is_multi_answer ASC")
+  List<SelectionQuestion> finTenQuestion();
 
 }
